@@ -31,7 +31,8 @@ jobs:
           ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
           echo "---" >> Changelog.md
-          echo "##${ISSUE_TITLE} [$(date +"%D %T")]" >> Changelog.md
+          echo "## ${ISSUE_TITLE} [$(date +"%D %T")]" >> Changelog.md
+          echo "" >> Changelog.md
           echo "${ISSUE_BODY}" >> Changelog.md
           echo "" >> Changelog.md
 
