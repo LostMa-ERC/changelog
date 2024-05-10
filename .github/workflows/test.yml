@@ -27,21 +27,24 @@ jobs:
       # Runs a single command using the runners shell
       - name: echo body
         env:
-          TITLE: ${{ github.event.issue.title }}
-          BODY: ${{ github.event.issue.body }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_TIME: ${{ date +"%D %T" }}
         run: |
-          echo "##${TITLE}" >> Changelog.txt
-          echo "${BODY}\n" >> Changelog.txt
+          echo "---" >> Changelog.md
+          echo "##[${ISSUE_TIME}] ${ISSUE_TITLE}" >> Changelog.md
+          echo "${ISSUE_BODY}" >> Changelog.md
+          echo "" >> Changelog.md
 
       # Commit changes
       - name: commit changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          if git diff Changelog.txt | grep . > /dev/null ; then
+          if git diff Changelog.md | grep . > /dev/null ; then
             git pull
-            git add Changelog.txt
-            git commit -m "automated update"
+            git add Changelog.md
+            git commit -m "log closed issue"
             git push
           fi
       
