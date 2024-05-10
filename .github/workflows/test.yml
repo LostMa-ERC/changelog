@@ -29,7 +29,7 @@ jobs:
         env:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_BODY: ${{ github.event.issue.body }}
-          ISSUE_TIME: ${{ date +"%D %T" }}
+          ISSUE_TIME: $(date +"%D %T")
         run: |
           echo "---" >> Changelog.md
           echo "##[${ISSUE_TIME}] ${ISSUE_TITLE}" >> Changelog.md
