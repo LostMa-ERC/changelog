@@ -27,8 +27,11 @@ jobs:
       # Runs a single command using the runners shell
       - name: echo body
         env:
-          BODY: ${{ github.event.comment.body }}
-        run: echo "$BODY" >> Changelog.txt
+          TITLE: ${{ github.event.issue.title }}
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          echo "##${TITLE}" >> Changelog.txt
+          echo "${BODY}\n" >> Changelog.txt
 
       # Commit changes
       - name: commit changes
